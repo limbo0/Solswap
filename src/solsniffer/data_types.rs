@@ -91,7 +91,7 @@ pub struct AuditRisk {
 pub struct TokenInfo {
     #[serde(deserialize_with = "string_to_f64")]
     pub price: f64,
-    pub supply_amount: u64,
+    pub supply_amount: f64,
     #[serde(rename = "mktCap")]
     pub market_cap: f64,
 }

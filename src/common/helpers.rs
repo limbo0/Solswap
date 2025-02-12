@@ -6,7 +6,7 @@ use solana_sdk::{program_pack::Pack, pubkey::Pubkey, signature::Keypair};
 use spl_token::state::Mint;
 use std::sync::Arc;
 
-use crate::Connection;
+use crate::ARpcCon;
 
 pub const PUMP_FUN_DECIMAL: i32 = 6;
 pub const W_SOL_DECIMAL: i32 = 9;
@@ -53,18 +53,14 @@ pub async fn convert_pk() {
     println!("{:?}", kp);
 }
 
-pub async fn get_token_data(con: &Connection, token: Pubkey) -> Result<Mint> {
+pub async fn get_token_data(con: &ARpcCon, token: Pubkey) -> Result<Mint> {
     let token_account = con.get_account(&token).unwrap();
     let token_data = Mint::unpack_unchecked(&token_account.data).unwrap();
     Ok(token_data)
 }
 
 // Pass in the atomic value eg(1350000000), return the dciamlized value as per the tokens decimal.
-pub async fn decimalized_value(
-    con: &Connection,
-    outAmount: &str,
-    outputMInt: Pubkey,
-) -> Result<f64> {
+pub async fn decimalized_value(con: &ARpcCon, outAmount: &str, outputMInt: Pubkey) -> Result<f64> {
     if outputMInt == WSOL.parse::<Pubkey>().unwrap() {
         Ok((outAmount.parse::<f64>().unwrap()) / 10f64.powi(W_SOL_DECIMAL))
     } else {

@@ -14,12 +14,15 @@ use solana_sdk::{
     transaction::VersionedTransaction,
 };
 use solswap::{
-    common::helpers::{
-        self, Command, MEME_TOKEN, QuoteCommands, WSOL, decimalized_value, get_token_data,
+    common::{
+        self,
+        helpers::{
+            self, Command, MEME_TOKEN, QuoteCommands, WSOL, decimalized_value, get_token_data,
+        },
     },
-    jupiter::quote_data_types::TransactionRequest,
     jupiter::{
         quote::quote_api_caller,
+        quote_data_types::TransactionRequest,
         swap::{build_txn, sign_send_tx},
     },
 };
@@ -48,7 +51,7 @@ async fn main() {
         .init();
 
     // load keypair dev
-    let devKP = Keypair::from_base58_string(&std::env::var("pk").unwrap());
+    let devKP = Keypair::from_base58_string(&std::env::var("coldpk").unwrap());
 
     // establish rpc connection
     let con = Arc::new(RpcClient::new(
@@ -70,6 +73,7 @@ async fn main() {
                     inAmount,
                 } => {
                     log::info!("Sol using as input\n");
+
                     let quote = quote_api_caller(&con, true, wsol, outputMint, inAmount)
                         .await
                         .unwrap();

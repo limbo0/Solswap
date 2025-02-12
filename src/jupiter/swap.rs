@@ -1,7 +1,7 @@
 //! Jupiter swap api caller.
 
 use crate::jupiter::{quote_data_types::QuoteResponse, swap_data_types::SwapResponse};
-use crate::{Connection, JitoTxResponse, common::helpers};
+use crate::{ARpcCon, JitoTxResponse, common::helpers};
 use anyhow::Result;
 use base64::Engine;
 use reqwest::{Client, Response, StatusCode};

@@ -1,4 +1,6 @@
 //! Entrypoint for solsniffer api.
+//! Sniffscore above 95: No risk detected.
+
 use crate::solsniffer::data_types::SnifferTokenResponse;
 use anyhow::Result;
 use reqwest::{Client, header};
@@ -37,9 +39,11 @@ mod tests {
     async fn call_sniffer() {
         dotenv().ok();
         let sniffapi = std::env::var("solsniffer").unwrap();
-        let token = "8oLrje2pcceAYyYN2wdJ93NYYqJycoXwKi8SjY3QfAW3"
+        let token = "2sCUCJdVkmyXp4dT8sFaA9LKgSMK4yDPi9zLHiwXpump"
             .parse::<Pubkey>()
             .unwrap();
-        check_solsniff(sniffapi, token).await.unwrap();
+        let rd = check_solsniff(sniffapi, token).await.unwrap();
+        println!("{:?}\n", rd.token_data.indicator_data.high.details);
+        assert_eq!(1, rd.token_data.score);
     }
 }

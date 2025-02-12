@@ -1,7 +1,7 @@
 //! Jupiter quote api caller
 
 use crate::{
-    Connection,
+    ARpcCon,
     common::helpers::{PUMP_FUN_DECIMAL, W_SOL_DECIMAL, get_token_data},
     jupiter::quote_data_types::QuoteResponse,
 };
@@ -13,7 +13,7 @@ use std::sync::Arc;
 // Passing u64 coz the input amount is not in atomic units.
 //
 pub async fn quote_api_caller(
-    con: &Connection,
+    con: &ARpcCon,
     sol_input: bool,
     inputMint: Pubkey,
     outputMint: Pubkey,
