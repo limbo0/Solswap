@@ -56,13 +56,18 @@ pub async fn sign_send_tx(
         .await
         .unwrap()
         .swapTransaction;
+    log::info!("checking here atm{:?}", swapTx);
+
     let decode = base64::engine::general_purpose::STANDARD
         .decode(swapTx)
         .unwrap();
     let ver_tx: VersionedTransaction = bincode::deserialize(&decode).unwrap();
+    log::info!("Ver tx looking here {:?}", ver_tx);
 
     log::info!("Signing transaction!\n");
     let signed_tx = VersionedTransaction::try_new(ver_tx.message, &[devKP]).unwrap();
+
+    // Final encoded transaction to send for execution.
     let encode_tx =
         base64::engine::general_purpose::STANDARD.encode(bincode::serialize(&signed_tx).unwrap());
 

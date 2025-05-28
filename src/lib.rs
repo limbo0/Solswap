@@ -1,6 +1,5 @@
 #![allow(non_snake_case, unused_imports)]
 
-pub mod blockparser;
 pub mod common;
 pub mod jupiter;
 pub mod rugcheck;
